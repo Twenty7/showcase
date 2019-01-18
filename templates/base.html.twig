@@ -28,10 +28,10 @@
                 {% block navbarLinks %}
                   <h4 class="text-white">Contact</h4>
                   <ul class="list-unstyled contact-links">
-                    <li><a href="https://twitter.com/IAmEvilHomer">Follow on Twitter</a></li>
-                    <li><a href="https://www.linkedin.com/in/mtaylor-twenty7">Connect on LinkedIn</a></li>
-                    <li><a href="https://github.com/Twenty7">Collaborate on GitHub</a></li>
-                    <li><a href="mailto:mtaylor+showcase@eight9.net?subject=I%20Found%20Your%20Showcase%20Site">Email me</a></li>
+                    <li><a href="https://twitter.com/IAmEvilHomer"><i class="fab fa-twitter"></i> Follow on Twitter</a></li>
+                    <li><a href="https://www.linkedin.com/in/mtaylor-twenty7"><i class="fab fa-linkedin-in"></i> Connect on LinkedIn</a></li>
+                    <li><a href="https://github.com/Twenty7"><i class="fab fa-github"></i> Collaborate on GitHub</a></li>
+                    <li><a href="mailto:mtaylor+showcase@eight9.net?subject=I%20Found%20Your%20Showcase%20Site"><i class="fas fa-at"></i> Write an Email</a></li>
                   </ul>
                 {% endblock %}
               </div>
@@ -42,7 +42,7 @@
           <div class="container d-flex justify-content-between">
             {% block navbarTitleContent %}
               <a href="{{ path('index_index') }}" class="navbar-brand d-flex align-items-center">
-                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="mr-2"><path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"></path><circle cx="12" cy="13" r="4"></circle></svg>
+                <i class="fas fa-music"></i>
                 <strong>{% block navbarTitle %}Music Showcase{% endblock %}</strong>
               </a>
             {% endblock %}

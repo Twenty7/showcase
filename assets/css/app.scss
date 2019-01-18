@@ -1,6 +1,11 @@
 @import "~bootstrap/scss/bootstrap";
 
 // Layout Styles
+.navbar-brand {
+  i, svg {
+    margin-right: 0.5em;
+  }
+}
 :root {
   --jumbotron-padding-y: 1rem;
 }
