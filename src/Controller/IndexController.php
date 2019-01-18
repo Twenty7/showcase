@@ -1,14 +1,14 @@
 <?php
-// src/Controller/ArtistController.php
+// src/Controller/IndexController.php
 namespace App\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Routing\Annotation\Route;
 
 /**
- * @Route("/artist", name="artist_")
+ * @Route("/", name="index_")
  */
-class ArtistController extends AbstractController
+class IndexController extends AbstractController
 {
 
     /**
@@ -17,10 +17,8 @@ class ArtistController extends AbstractController
     public function index()
     {
 
-        return $this->render('artist/index.html.twig', [
+        return $this->render('index/index.html.twig', [
             'album' => 'foobar',
         ]);
     }
-
-    
 }

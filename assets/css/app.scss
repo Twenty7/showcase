@@ -1,5 +1,44 @@
 @import "~bootstrap/scss/bootstrap";
 
-body {
-    background-color: lightgray;
+// Layout Styles
+.navbar-brand {
+  i, svg {
+    margin-right: 0.5em;
+  }
 }
+:root {
+  --jumbotron-padding-y: 1rem;
+}
+.jumbotron {
+  padding-top: var(--jumbotron-padding-y);
+  padding-bottom: var(--jumbotron-padding-y);
+  margin-bottom: 0;
+  background-color: #fff;
+}
+@media (min-width: 768px) {
+  .jumbotron {
+    padding-top: calc(var(--jumbotron-padding-y) * 2);
+    padding-bottom: calc(var(--jumbotron-padding-y) * 2);
+  }
+}
+.jumbotron p:last-child {
+  margin-bottom: 0;
+}
+.jumbotron-heading {
+  font-weight: 300;
+}
+
+footer {
+  padding-top: 1rem;
+  padding-bottom: 1rem;
+}
+
+// App Styles
+.contact-links a {
+  @extend .text-white;
+}
+.section-title {
+  border-bottom: 1px solid darkgrey;
+  margin-bottom: 1em;
+}
+
