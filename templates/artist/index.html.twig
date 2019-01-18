@@ -1,9 +1,24 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Artists{% endblock %}
+{% block title %}Artist{% endblock %}
+{% block navbarTitle %}Music Showcase{% endblock %}
 
-{% block body %}
-  <div class"artist">
-    {{ foo }}
+{% block jumbotron %}
+  <section class="jumbotron text-center">
+    <div class="container">
+      {% block jumbotronContent %}
+        <h1 class="jumbotron-heading">--Artist Title--</h1>
+        <p class="lead text-muted">--Artist Info--</p>
+      {% endblock %}
+    </div>
+  </section>
+{% endblock %}
+
+{% block mainContent %}
+  --List Some Albums--
+  <div class="row">
+    {{ include('artist/album_snapshot.html.twig', { 'album': album }) }}
+    {{ include('artist/album_snapshot.html.twig', { 'album': album }) }}
+    {{ include('artist/album_snapshot.html.twig', { 'album': album }) }}
   </div>
 {% endblock %}

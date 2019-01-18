@@ -1,0 +1,31 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Album Search{% endblock %}
+{% block navbarTitle %}Music Showcase{% endblock %}
+
+{% block jumbotron %}
+  <section class="jumbotron text-center">
+    <div class="container">
+      {% block jumbotronContent %}
+        <h1 class="jumbotron-heading">Album Search</h1>
+        <p class="lead text-muted">Search for any Album by name or by Artist.</p>
+        <form class="form-inline my-2 my-lg-0">
+          <div class="mx-auto">
+            <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search" id="album-search" name="album-search" />
+            <button class="btn btn-primary my-2 my-sm-0" type="submit">Search</button>
+          </div>
+        </form>
+      {% endblock %}
+    </div>
+  </section>
+{% endblock %}
+
+{% block mainContent %}
+  <h3 class="section-title">Top Albums</h3>
+
+  <div class="row">
+    {{ include('artist/album_snapshot.html.twig', { 'album': album }) }}
+    {{ include('artist/album_snapshot.html.twig', { 'album': album }) }}
+    {{ include('artist/album_snapshot.html.twig', { 'album': album }) }}
+  </div>
+{% endblock %}
