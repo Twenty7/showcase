@@ -9,12 +9,7 @@
       {% block jumbotronContent %}
         <h1 class="jumbotron-heading">Album Search</h1>
         <p class="lead text-muted">Search for any Album by name or by Artist.</p>
-        <form class="form-inline my-2 my-lg-0">
-          <div class="mx-auto">
-            <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search" id="album-search" name="album-search" />
-            <button class="btn btn-primary my-2 my-sm-0" type="submit"><i class="fas fa-search"></i> Search</button>
-          </div>
-        </form>
+        <div id="album-search-form-container"></div>
       {% endblock %}
     </div>
   </section>
@@ -23,9 +18,5 @@
 {% block mainContent %}
   <h3 class="section-title">Top Albums</h3>
 
-  <div class="row">
-    {{ include('artist/album_snapshot.html.twig', { 'album': album }) }}
-    {{ include('artist/album_snapshot.html.twig', { 'album': album }) }}
-    {{ include('artist/album_snapshot.html.twig', { 'album': album }) }}
-  </div>
+  <div id="album-tiles"></div>
 {% endblock %}
