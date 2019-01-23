@@ -4,6 +4,8 @@ namespace App\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Routing\Annotation\Route;
+use App\Entity\Artist;
+use App\Entity\Album;
 
 /**
  * @Route("/artist", name="artist_")
@@ -41,13 +43,12 @@ class ArtistController extends AbstractController
      */
     public function albumTop10()
     {
+        $top_albums = $this->getDoctrine()
+            ->getRepository(Album::class)
+            ->findTop10();
+
         return $this->json([
-            'albums' => [
-                ['title' => 'Twelve'],
-                ['title' => 'Eleven'],
-                ['title' => 'Thirteen'],
-                ['title' => 'Fourteen'],
-            ],
+            'albums' => $top_albums,
         ]);
     }
 }
