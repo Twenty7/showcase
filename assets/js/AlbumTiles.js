@@ -43,14 +43,35 @@ class AlbumTiles extends React.Component {
     render() {
         if (this.state.albums) {
             const renderAlbums = this.state.albums.map(function(album, i) {
-                return <li key={i}>{album.title}</li>
+                return (
+                    <div key={i} className="col-md-4">
+                        <div className="card mb-4 shadow-sm">
+                            <img className="card-img-top" src={"http://coverartarchive.org/release-group/" + album.gid + "/front-500"} alt="Album Artwork" />
+                            <div className="card-body">
+                                <h5 className="card-title">
+                                    {album.name}
+                                </h5>
+
+                                <div className="card-artist-name">
+                                    by {album.artist_name}
+                                </div>
+                                <div className="d-flex justify-content-between align-items-center mt-3">
+                                    <small className="card-album-year text-muted float-right">
+                                        {album.release_year}
+                                    </small>
+                                    <small className="card-album-tracks text-muted">{album.track_cnt} tracks</small>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                )
             });
             return (
                 <div>
                     <h3 className="section-title">{this.state.title}</h3>
-                    <ul className="album-tiles-ul">
+                    <div className="row">
                         {renderAlbums}
-                    </ul>
+                    </div>
                 </div>
             );
         }
