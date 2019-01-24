@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\HttpFoundation\Request;
 use App\Entity\Artist;
 use App\Entity\Album;
 
@@ -12,6 +13,20 @@ use App\Entity\Album;
  */
 class ArtistController extends AbstractController
 {
+
+    /**
+     * Parse and return request body json
+     * @return array $params
+     */
+    private function getJsonRequestData()
+    {
+        $request = Request::createFromGlobals();
+        $content = $request->getContent();
+        if (!empty($content)) {
+            $params = json_decode($content, true);
+        }
+        return $params;
+    }
 
     /**
      * @Route("", name="index")
@@ -28,13 +43,13 @@ class ArtistController extends AbstractController
      */
     public function albumSearch()
     {
+        $params = $this->getJsonRequestData();
+        $album_results = $this->getDoctrine()
+            ->getRepository(Album::class)
+            ->searchByTitle($params['search-string']);
+
         return $this->json([
-            'albums' => [
-                ['title' => 'One'],
-                ['title' => 'Two'],
-                ['title' => 'Three'],
-                ['title' => 'Four'],
-            ],
+            'albums' => $album_results,
         ]);
     }
 

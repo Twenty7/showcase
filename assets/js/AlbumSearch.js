@@ -2,16 +2,27 @@ const React = require('react');
 
 class AlbumSearch extends React.Component {
 
+    constructor(props){
+        super(props);
+        this.state = {
+            albumSearchValue: '',
+            albums: [],
+            title: '',
+            renderObj: '',
+        };
+        this.handleChange = this.handleChange.bind(this);
+    }
+
     // Updates search string state
-    handleChange(target) {
-        this.props.handleChange(target.value);
+    handleChange(event) {
+        this.setState( {[event.target.name]: event.target.value} );
     }
 
     // Process the AlbumSearch Form
     handleSubmit() {
         event.preventDefault();
         var data = {
-            'search-string': this.props.albumSearchValue
+            'search-string': this.state.albumSearchValue
         };
         return fetch('/artist/album-search', {
             method: 'POST',
@@ -30,7 +41,7 @@ class AlbumSearch extends React.Component {
         return (
             <form className="form-inline my-2 my-lg-0" id="album-search-form" onSubmit={this.handleSubmit.bind(this)}>
                 <div className="mx-auto">
-                    <input className="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search" id="album-search" name="albumSearchValue" onChange={this.handleChange.bind(this)} />
+                    <input className="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search" id="album-search" name="albumSearchValue" onChange={event => this.handleChange(event)} />
                     <button className="btn btn-primary my-2 my-sm-0" type="submit"><i className="fas fa-search"></i> Search</button>
                 </div>
             </form>

@@ -22,13 +22,6 @@ class AlbumApp extends React.Component {
         };
     }
 
-    // Updates search string state
-    handleChange(albumSearchValue) {
-        this.setState({
-            albumSearchValue: albumSearchValue
-        })
-    }
-
     // Parent AlbumSearch handleSubmit
     handleSubmit() {
     }
@@ -60,12 +53,11 @@ class AlbumApp extends React.Component {
                     albums={this.state.albums}
                     title={this.state.title} 
                     albumSearchValue={this.state.albumSearchValue}
-                    handleChange={this.handleChange.bind(this)}
                     handleSubmit={this.handleSubmit.bind(this)}
                     setAlbums={this.setAlbums.bind(this)}
                     eventHandler={this.props.eventHandler}
                 />
-          </div>
+            </div>
         )
     }
 }

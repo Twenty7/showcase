@@ -69,6 +69,7 @@ class AlbumRepository extends ServiceEntityRepository
                 SELECT r_inner.release_group, rgm_inner.rating, rgm_inner.rating_count, rgm_inner.first_release_date_year, MAX(r_inner.id) AS max_id
                 FROM musicbrainz.release AS r_inner
                 JOIN musicbrainz.release_group_meta AS rgm_inner ON rgm_inner.id = r_inner.release_group
+                JOIN musicbrainz.artist_credit AS ac_inner ON ac_inner.id = r_inner.artist_credit
                 WHERE r_inner.status = '1' AND r_inner.status IS NOT NULL
                     {$criteria_sql}
                 GROUP BY r_inner.release_group, rgm_inner.rating, rgm_inner.rating_count, rgm_inner.first_release_date_year
@@ -85,13 +86,28 @@ class AlbumRepository extends ServiceEntityRepository
 
     /**
      * List the Top 10 Rated Albums
-     * @return Album[] Returns an array of Album objects
+     * @return array[] Returns an array of Album data
      */
     public function findTop10()
     {
-        $criteria = ['rgm_inner.rating IS NOT NULL', 'rgm_inner.rating_count > ?'];
-        $params = [20];
+        $criteria = ['rgm_inner.rating IS NOT NULL', 'rgm_inner.rating_count > :rating_count'];
+        $params = ['rating_count' => 20];
         $order_by = ["rgm_inner.rating DESC", "rgm_inner.rating_count DESC"];
+        $limit = 12;
+        $sql = $this->buildAlbumSelectQuery($criteria, $order_by, $limit);
+        return $this->getEntityManager()->getConnection()->executeQuery($sql, $params)->fetchAll();
+    }
+
+    /**
+     * Search Albums by Album Name and Artist Name
+     * @param string Search keyword
+     * @return array[] Returns an array of Album data
+     */
+    public function searchByTitle($keyword)
+    {
+        $criteria = ["r_inner.name ILIKE :keyword OR ac_inner.name ILIKE :keyword"];
+        $params = ['keyword' => '%' . $keyword . '%'];
+        $order_by = [];
         $limit = 12;
         $sql = $this->buildAlbumSelectQuery($criteria, $order_by, $limit);
         return $this->getEntityManager()->getConnection()->executeQuery($sql, $params)->fetchAll();
