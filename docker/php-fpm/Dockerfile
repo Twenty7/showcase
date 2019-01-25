@@ -23,8 +23,10 @@ RUN chmod +x /usr/local/bin/composer
 ADD www.conf /etc/php/7.3/fpm/pool.d/www.conf
 ADD php-fpm.conf /etc/php/7.3/fpm/php-fpm.conf
 
-CMD ["php-fpm", "-F"]
-
 WORKDIR /code
+COPY ../ /code
+RUN composer install --no-dev --no-interaction -o
+
+CMD ["php-fpm", "-F"]
 
 EXPOSE 9000

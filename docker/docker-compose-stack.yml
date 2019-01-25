@@ -3,9 +3,10 @@ version: '3.6'
 services:
 
   php:
-    image: twenty7/music-showcase-app:latest
     build: ./php-fpm
     restart: always
+    volumes:
+      - ../:/code:cached
       - ./logs:/var/log
     networks:
       - showcase
