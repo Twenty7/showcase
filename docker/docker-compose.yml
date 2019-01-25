@@ -1,0 +1,43 @@
+version: '3.6'
+
+services:
+
+  php:
+    build: ./php-fpm
+    restart: always
+    volumes:
+      - ../:/code:cached
+      - ./logs:/var/log
+    networks:
+      - showcase
+
+  nginx:
+    image: nginx:latest
+    restart: always
+    ports:
+      - "8080:80"
+    command: ["/bin/bash", "-c", "sed 's/NGINX_HOST/${NGINX_HOST}/g' /etc/nginx/conf.d/site.conf.tmp > /etc/nginx/conf.d/site.conf && nginx -g 'daemon off;'"]
+    volumes:
+      - ../:/code:cached
+      - ./nginx.conf:/etc/nginx/conf.d/site.conf.tmp
+      - ./logs:/var/log/nginx
+    networks:
+      - showcase
+    depends_on:
+      - php
+      - postgres
+
+  postgres:
+    image: postgres
+    restart: always
+    environment:
+      POSTGRES_USER: "musicbrainz"
+      POSTGRES_PASSWORD: "musicbrainz"
+    volumes:
+      - ./db-data:/var/lib/postgresql/data/
+    networks:
+      - showcase
+
+networks:
+  showcase:
+    driver: bridge
