@@ -20,11 +20,15 @@ RUN php -r "unlink('composer-setup.php');"
 RUN mv composer.phar /usr/local/bin/composer
 RUN chmod +x /usr/local/bin/composer
 
-ADD www.conf /etc/php/7.3/fpm/pool.d/www.conf
-ADD php-fpm.conf /etc/php/7.3/fpm/php-fpm.conf
+RUN useradd -ms /bin/bash docker
+USER docker
+
+ADD docker/php-fpm/www.conf /etc/php/7.3/fpm/pool.d/www.conf
+ADD docker/php-fpm/php-fpm.conf /etc/php/7.3/fpm/php-fpm.conf
 
 WORKDIR /code
-COPY ../ /code
+ADD ./ /code
+
 RUN composer install --no-dev --no-interaction -o
 
 CMD ["php-fpm", "-F"]

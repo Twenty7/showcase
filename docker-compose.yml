@@ -4,9 +4,10 @@ services:
 
   php:
     image: twenty7/music-showcase-app:latest
-    build: ./php-fpm
+    build: ./
     restart: always
-      - ./logs:/var/log
+    volumes:
+      - ./docker/logs:/var/log
     networks:
       - showcase
 
@@ -17,9 +18,9 @@ services:
       - "80:80"
     command: ["/bin/bash", "-c", "sed 's/NGINX_HOST/${NGINX_HOST}/g' /etc/nginx/conf.d/site.conf.tmp > /etc/nginx/conf.d/site.conf && nginx -g 'daemon off;'"]
     volumes:
-      - ../:/code:cached
-      - ./nginx.conf:/etc/nginx/conf.d/site.conf.tmp
-      - ./logs:/var/log/nginx
+      - ./:/code:cached
+      - ./docker/nginx.conf:/etc/nginx/conf.d/site.conf.tmp
+      - ./docker/logs:/var/log/nginx
     networks:
       - showcase
     depends_on:
@@ -33,7 +34,7 @@ services:
       POSTGRES_USER: "musicbrainz"
       POSTGRES_PASSWORD: "musicbrainz"
     volumes:
-      - ./db-data:/var/lib/postgresql/data/
+      - ./docker/db-data:/var/lib/postgresql/data/
     networks:
       - showcase
 
