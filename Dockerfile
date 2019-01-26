@@ -43,11 +43,12 @@ USER www-data
 
 ADD docker/php-fpm/www.conf /etc/php/7.3/fpm/pool.d/www.conf
 ADD docker/php-fpm/php-fpm.conf /etc/php/7.3/fpm/php-fpm.conf
+ADD docker/php-fpm/entrypoint.sh /var/www/showcase/entrypoint.sh
 
 RUN composer install --no-interaction -o
 RUN yarn install
-RUN yarn run encore production
 
-CMD ["php-fpm", "-F"]
+ENTRYPOINT [ "/var/www/showcase/entrypoint.sh" ]
 
 EXPOSE 9000
+
