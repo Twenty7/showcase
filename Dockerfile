@@ -5,11 +5,14 @@ RUN apt-get update && apt-get install -my \
   wget \
   git \
   zip \
-  libpq-dev
+  libpq-dev \
+  libzip-dev
+  
+  
 
 RUN docker-php-source extract \
-    && pecl install redis \
-    && docker-php-ext-enable redis \
+    && pecl install redis zip \
+    && docker-php-ext-enable redis zip \
     && docker-php-source delete \
     && docker-php-ext-install pdo pdo_pgsql \
     && docker-php-source delete
@@ -20,16 +23,18 @@ RUN php -r "unlink('composer-setup.php');"
 RUN mv composer.phar /usr/local/bin/composer
 RUN chmod +x /usr/local/bin/composer
 
-RUN useradd -ms /bin/bash docker
-USER docker
+# RUN useradd -ms /bin/bash docker
+WORKDIR /var/www/showcase
+ADD ./ /var/www/showcase
+RUN rm -rf /var/www/showcase/cache/*
+RUN rm -rf /var/www/showcase/vendor/*
+RUN chown -R www-data:www-data /var/www
+USER www-data
 
 ADD docker/php-fpm/www.conf /etc/php/7.3/fpm/pool.d/www.conf
 ADD docker/php-fpm/php-fpm.conf /etc/php/7.3/fpm/php-fpm.conf
 
-WORKDIR /code
-ADD ./ /code
-
-RUN composer install --no-dev --no-interaction -o
+RUN composer install --no-interaction -o
 
 CMD ["php-fpm", "-F"]
 
