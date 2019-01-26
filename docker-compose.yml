@@ -3,11 +3,12 @@ version: '3.6'
 services:
 
   php:
-    build: ./php-fpm
+    image: twenty7/music-showcase-app:latest
+    build: ./
     restart: always
     volumes:
-      - ../:/code:cached
-      - ./logs:/var/log
+      - ./docker/logs:/var/log
+      - ./public:/var/www/showcase/public
     networks:
       - showcase
 
@@ -15,12 +16,12 @@ services:
     image: nginx:latest
     restart: always
     ports:
-      - "8080:80"
+      - "80:80"
     command: ["/bin/bash", "-c", "sed 's/NGINX_HOST/${NGINX_HOST}/g' /etc/nginx/conf.d/site.conf.tmp > /etc/nginx/conf.d/site.conf && nginx -g 'daemon off;'"]
     volumes:
-      - ../:/code:cached
-      - ./nginx.conf:/etc/nginx/conf.d/site.conf.tmp
-      - ./logs:/var/log/nginx
+      - ./:/var/www/showcase:cached
+      - ./docker/nginx.conf:/etc/nginx/conf.d/site.conf.tmp
+      - ./docker/logs:/var/log/nginx
     networks:
       - showcase
     depends_on:
@@ -34,7 +35,7 @@ services:
       POSTGRES_USER: "musicbrainz"
       POSTGRES_PASSWORD: "musicbrainz"
     volumes:
-      - ./db-data:/var/lib/postgresql/data/
+      - ./docker/db-data:/var/lib/postgresql/data/
     networks:
       - showcase
 
