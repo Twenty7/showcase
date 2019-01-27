@@ -33,6 +33,7 @@ RUN php -r "unlink('composer-setup.php');"
 RUN mv composer.phar /usr/local/bin/composer
 RUN chmod +x /usr/local/bin/composer
 
+RUN usermod -u 500 www-data
 WORKDIR /var/www/showcase
 ADD ./ /var/www/showcase
 RUN rm -rf /var/www/showcase/cache/*
