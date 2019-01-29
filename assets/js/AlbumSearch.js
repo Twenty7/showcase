@@ -1,5 +1,7 @@
 const React = require('react');
 
+import LoadingSpinner from './LoadingSpinner.js';
+
 class AlbumSearch extends React.Component {
 
     constructor(props){
@@ -9,6 +11,7 @@ class AlbumSearch extends React.Component {
             albums: [],
             title: '',
             renderObj: '',
+            loading: false,
         };
         this.handleChange = this.handleChange.bind(this);
     }
@@ -21,6 +24,7 @@ class AlbumSearch extends React.Component {
     // Process the AlbumSearch Form
     handleSubmit() {
         event.preventDefault();
+        this.setState({loading:true});
         var data = {
             'search-string': this.state.albumSearchValue
         };
@@ -31,6 +35,7 @@ class AlbumSearch extends React.Component {
             return response.json();
         }).then( (json) => {
             this.props.setAlbums(json.albums, 'Search Results');
+            this.setState({loading:false});
         }).catch( (ex) => {
             console.log('Error: ', ex);
         });
@@ -39,12 +44,15 @@ class AlbumSearch extends React.Component {
     // Display AlbumSearch form
     render() {
         return (
-            <form className="form-inline my-2 my-lg-0" id="album-search-form" onSubmit={this.handleSubmit.bind(this)}>
-                <div className="mx-auto">
-                    <input className="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search" id="album-search" name="albumSearchValue" onChange={event => this.handleChange(event)} />
-                    <button className="btn btn-primary my-2 my-sm-0" type="submit"><i className="fas fa-search"></i> Search</button>
-                </div>
-            </form>
+            <div>
+                <form className="form-inline my-2 my-lg-0" id="album-search-form" onSubmit={this.handleSubmit.bind(this)}>
+                    <div className="mx-auto">
+                        <input className="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search" id="album-search" name="albumSearchValue" onChange={event => this.handleChange(event)} />
+                        <button className="btn btn-primary my-2 my-sm-0" type="submit"><i className="fas fa-search"></i> Search</button>
+                    </div>
+                </form>
+                {this.state.loading ? <LoadingSpinner /> : ''}
+            </div>
         )
     }
 }

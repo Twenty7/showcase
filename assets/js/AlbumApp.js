@@ -19,6 +19,7 @@ class AlbumApp extends React.Component {
             albums: [],
             title: '',
             renderObj: '',
+            loading: false,
         };
     }
 
@@ -50,6 +51,7 @@ class AlbumApp extends React.Component {
         return (
             <div>
                 <$comp 
+                    loading={this.state.loading}
                     albums={this.state.albums}
                     title={this.state.title} 
                     albumSearchValue={this.state.albumSearchValue}
