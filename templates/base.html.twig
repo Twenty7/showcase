@@ -68,7 +68,6 @@
         {% endblock %}
       </main>
 
-  
       <footer class="text-muted">
         <div class="container">
           <p class="float-right">
@@ -81,6 +80,14 @@
 
       {% block javascripts %}
           {{ encore_entry_script_tags('app') }}
+
+          <script async src="//www.googletagmanager.com/gtag/js?id=UA-98315552-4"></script>
+          <script>
+            window.dataLayer = window.dataLayer || [];
+            function gtag(){dataLayer.push(arguments);}
+            gtag('js', new Date());
+            gtag('config', 'UA-98315552-4');
+          </script>
       {% endblock %}
     </body>
 </html>
