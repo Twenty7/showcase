@@ -16,7 +16,7 @@ services:
     image: nginx:latest
     restart: always
     ports:
-      - "80:80"
+      - "5001:80"
     command: ["/bin/bash", "-c", "sed 's/NGINX_HOST/${NGINX_HOST}/g' /etc/nginx/conf.d/site.conf.tmp > /etc/nginx/conf.d/site.conf && nginx -g 'daemon off;'"]
     volumes:
       - ./:/var/www/showcase:ro
